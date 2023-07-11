@@ -9,14 +9,55 @@ if ($_SESSION['sid'] === session_id() && $_SESSION['user']== "admin") {
         exit();
     }
 
-    $sql = "SELECT * FROM staff";
-    $result = $mysqli->query($sql);
 
-    if ($result->num_rows == 0) {
+    $sql3 = "SELECT * 
+FROM login INNER JOIN  staff
+     WHERE user_id = staff_id AND user_type = 'PC' ";
+
+
+    $result3 = $mysqli->query($sql3);
+
+
+    // while ($row4=$result3->fetch_array(MYSQLI_ASSOC)) {
+    //     $user = $row4['staff_id'];
+    //     $first_name = $row4['first_name'];
+    //     echo $first_name;
+    // }
+
+    // $sql = "SELECT * FROM login WHERE user_type = 'PC'" ;
+    // $result = $mysqli->query($sql);
+
+    // while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
+    //     $staff_id = $row['user_id'];
+    //     // echo $staff_id;
+
+    //     $sql1 = "SELECT * FROM staff WHERE staff_id='".$staff_id."' ";
+    //     $result1=  $mysqli->query($sql1);
+    //     // while ($row2 = $result1->fetch_array(MYSQLI_ASSOC)) {
+    //     //     $staff_ids = $row2['staff_id'];
+    //     //     $first_name = $row2['first_name'];
+    //     //     $last_name = $row2['last_name'];
+    //     //     // echo $staff_ids;
+    //     // }
+    //     // echo $staff_id;
+    // }
+
+
+
+
+    // echo $staff_id;
+
+    if ($result3->num_rows > 0) {
+
+
+    } else {
         echo	"<script>
-				alert(\"'".$leave_type."' no leve found !\");
-				window.location=\"add_leave.php\";</script>";
+    alert(\"'please add coordinator !\");
+    window.location=\"asing_coordinator.php\";</script>";
     }
+
+
+
 
 
 
@@ -111,24 +152,24 @@ if ($_SESSION['sid'] === session_id() && $_SESSION['user']== "admin") {
 
                             <?php
 
-                            while ($row = $result->fetch_array()) {
-                                $first_name = $row['first_name'];
-                                $middle_name = $row['middle_name'];
-                                $last_name = $row['last_name'];
-                                $staff_id = $row['staff_id'];
 
-                                echo ' <tr>
-                                <td class="text-sm"> '.$i.' </td>
-                                <td class="text-sm"> '.$first_name.' '.$last_name.' </td>
-                                <td class="text-sm"> '.$staff_id.' </td>
-                                <td class="text-sm flex "> <span class="mx-4"><a href="./edit_stuff.php?staff='.$staff_id.'" class="text-blue-500"> edit</a></span> <span><a href="./delete_stuff.php?staff='.$staff_id.'" class="text-red-500 cursor-pointer"> delete</a></span> </td>
+while ($row = $result3->fetch_array()) {
+    $first_name = $row['first_name'];
+    $middle_name = $row['middle_name'];
+    $last_name = $row['last_name'];
+    $staff_id = $row['staff_id'];
 
-                            </tr>';
+    echo ' <tr>
+    <td class="text-sm"> '.$i.' </td>
+    <td class="text-sm"> '.$first_name.' '.$last_name.' </td>
+    <td class="text-sm"> '.$staff_id.' </td>
+    <td class="text-sm flex "> <span class="mx-4"><a href="./edit_stuff.php?staff='.$staff_id.'" class="text-blue-500"> edit</a></span> <span><a href="./delete_stuff.php?staff='.$staff_id.'" class="text-red-500 cursor-pointer"> delete</a></span> </td>
 
-                                $i++;
+</tr>';
 
-                            }
+    $i++;
 
+}
 
     ?>
 
@@ -136,6 +177,10 @@ if ($_SESSION['sid'] === session_id() && $_SESSION['user']== "admin") {
 
                         </tbody>
                     </table>
+                    <div class="grid justify-end px-12 ">
+                        <a href="./asing_coordinator.php" class="text-gray-700 py-1 px-3 bg-green-300 rounded-sm">add
+                            coordinator</a>
+                    </div>
 
 
                 </div>

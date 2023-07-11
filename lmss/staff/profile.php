@@ -76,12 +76,12 @@ if($_SESSION['sid'] == session_id() && $_SESSION['user'] == "Staff") {
                             leave </a>
 
                     </li>
-                    <li class="w-full py-1 my-3 border-b py-4 px-4  border-gray-500">
+                    <!-- <li class="w-full py-1 my-3 border-b py-4 px-4  border-gray-500">
                         <a href="#"
                             class=" capitalize text-2xl hover:text-gray-600 font-semibold no-underline text-gray-700">view
                             leave status </a>
 
-                    </li>
+                    </li> -->
                     <li class="w-full py-1 my-3 border-b py-4 px-4  border-gray-500">
                         <a href="./profile.php"
                             class=" capitalize text-2xl hover:text-gray-600 font-semibold no-underline text-gray-700">view

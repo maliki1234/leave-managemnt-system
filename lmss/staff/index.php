@@ -60,7 +60,7 @@ if($_SESSION['sid'] == session_id() && $_SESSION['user'] == "Staff") {
                 </li>
                 <li class="px-1 mx-1">
                     hello!
-                    <?php echo $_SESSION['user'];?>
+                    <?php echo $first_name;?>
                 </li>
             </ul>
         </div>
