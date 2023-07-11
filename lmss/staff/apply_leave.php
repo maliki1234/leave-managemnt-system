@@ -1,6 +1,7 @@
 <?php
 session_start();
 if($_SESSION['sid'] == session_id() && $_SESSION['user'] == "Staff") {
+    $staff_id = $_SESSION['staff_id'];
     $mysqli = new mysqli("localhost", "root", "", "lms");
 
     // Check connection
@@ -10,7 +11,22 @@ if($_SESSION['sid'] == session_id() && $_SESSION['user'] == "Staff") {
     }
     $sql = "SELECT * FROM leave_types";
     $result = $mysqli -> query($sql);
-    $result1 = $mysqli -> query($sql);
+    // $result1 = $mysqli -> query($sql);
+
+    $sql2 = "SELECT * FROM staff WHERE staff_id = '".$staff_id."'";
+
+    // $sql = "SELECT * FROM leave_requests WHERE staff_id = '".$staff_id."'";
+
+    $result2 =$mysqli->query($sql2);
+
+    while($row2 = $result2->fetch_array()) {
+        // echo $row1['first_name'];
+        $first_name = $row2['first_name'];
+        $middle_name = $row2['middle_name'];
+        $last_name = $row2['last_name'];
+
+        // echo "this is the ";
+    }
 
     // if ($result) {
     // 	echo	"<script>
@@ -42,7 +58,7 @@ if($_SESSION['sid'] == session_id() && $_SESSION['user'] == "Staff") {
                         logout</a>
                 </li>
                 <li class="px-1 mx-1">
-                    hello! logan
+                    hello! <?php echo $first_name?>
                 </li>
             </ul>
         </div>
@@ -50,17 +66,17 @@ if($_SESSION['sid'] == session_id() && $_SESSION['user'] == "Staff") {
             <aside class="col-span-1  pt-10 bg-gray-300 h-screen">
                 <ul class="flex flex-col ">
                     <li class="w-full py-1 my-3 border-b py-4 px-4  border-gray-500">
-                        <a href="#"
+                        <a href="./apply_leave.php"
                             class=" capitalize text-2xl hover:text-gray-600 font-semibold no-underline text-gray-700">apply
                             leave </a>
 
                     </li>
-                    <li class="w-full py-1 my-3 border-b py-4 px-4  border-gray-500">
+                    <!-- <li class="w-full py-1 my-3 border-b py-4 px-4  border-gray-500">
                         <a href="#"
                             class=" capitalize text-2xl hover:text-gray-600 font-semibold no-underline text-gray-700">view
                             leave status </a>
 
-                    </li>
+                    </li> -->
                     <li class="w-full py-1 my-3 border-b py-4 px-4  border-gray-500">
                         <a href="profile.php"
                             class=" capitalize text-2xl hover:text-gray-600 font-semibold no-underline text-gray-700">view

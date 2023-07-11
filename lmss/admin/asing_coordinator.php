@@ -1,6 +1,38 @@
 <?php
 session_start();
-if($_SESSION['sid'] == session_id() && $_SESSION['user'] == "admin") {
+if ($_SESSION['sid'] === session_id() && $_SESSION['user']== "admin") {
+    $i=1;
+    $mysqli = new mysqli("localhost", "root", "", "lms");
+
+    if ($mysqli -> connect_errno) {
+        echo"Failed to connect to mysql" .$mysqli-> connect_errno;
+        exit();
+    }
+
+    $sql3 = "SELECT * 
+    FROM login INNER JOIN  staff
+         WHERE user_id = staff_id AND user_type = 'Staff' ";
+    $result = $mysqli->query($sql3);
+
+
+
+
+    // echo $staff_id;
+
+    if ($result->num_rows > 0) {
+
+
+    } else {
+        echo	"<script>
+    alert(\" no one to assing!\");
+    window.location=\"add_leave.php\";</script>";
+    }
+
+
+
+
+
+
     ?>
 
 
@@ -36,7 +68,7 @@ if($_SESSION['sid'] == session_id() && $_SESSION['user'] == "admin") {
             <aside class="col-span-1  pt-10 bg-gray-300 h-screen">
                 <ul class="flex flex-col ">
                     <li class="w-full py-1 my-3 border-b py-4 px-4  border-gray-500">
-                        <a href="./add_staff.php"
+                        <a href="./index.php"
                             class=" capitalize text-2xl hover:text-gray-600 font-semibold no-underline text-gray-700">add
                             stuff </a>
 
@@ -69,27 +101,56 @@ if($_SESSION['sid'] == session_id() && $_SESSION['user'] == "admin") {
             </aside>
             <div class="col-span-6">
                 <div class=" bg-gray-300  py-2 w-11/12 m-3">
-                    <h1 class="text-4xl font-bold text-gray-800 uppercase text-center"> add leave </h1>
+                    <h1 class="text-4xl font-bold text-gray-800 uppercase text-center"> view stuff </h1>
                     <div class=" w-10/12 py-1 mx-auto bg-white my-4 rounded-sm"></div>
-                    <form action="./add_leave_db.php" method="post" class="px-4">
 
-                        <div class="my-1">
-                            <label for=""> type of leave</label>
-                            <input type="text" name="type_of_leave" placeholder="type of leave"
-                                class="w-full py-2 px-1 rounded-sm" id="">
+                    <table class="w-full">
+                        <thead class="py-2">
+                            <tr class="border-b-1 border-gray-500">
+                                <th class="capitalize text-left">no</th>
+                                <th class="capitalize text-left">name</th>
+                                <th class="capitalize text-left">email</th>
+                                <th class="capitalize text-left"> action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- <tr>
+                                <td class="text-sm"> 1 </td>
+                                <td class="text-sm"> maliki kowero </td>
+                                <td class="text-sm"> malikikoero@gmail.com </td>
+                                <td class="text-sm flex "> <span class="mx-4">edit</span> <span>delete</span> </td>
 
-                        </div>
-                        <div class="my-1">
-                            <label for=""> number of days</label>
-                            <input type="number" name="number_of_leaves" placeholder="number of days"
-                                class="w-full py-2 px-1 rounded-sm" id="">
+                            </tr> -->
 
-                        </div>
-                        <button type="submit"
-                            class="inline-block my-2 py-4 bg-blue-600 text-white rounded-md outline-none px-12 bg">add
-                            leave</button>
+                            <?php
 
-                    </form>
+                            while ($row = $result->fetch_array()) {
+                                $first_name = $row['first_name'];
+                                $middle_name = $row['middle_name'];
+                                $last_name = $row['last_name'];
+                                $staff_id = $row['staff_id'];
+
+                                echo ' <tr>
+                                <td class="text-sm"> '.$i.' </td>
+                                <td class="text-sm"> '.$first_name.' '.$last_name.' </td>
+                                <td class="text-sm"> '.$staff_id.' </td>
+                                <td class="text-sm flex "> <span class="mx-4"><a href="./asing_coordinator_db.php?staff='.$staff_id.'" class="text-blue-500"> assing coordinator</a></span>  </td>
+
+                            </tr>';
+
+                                $i++;
+
+                            }
+
+
+    ?>
+
+
+
+                        </tbody>
+                    </table>
+
+
                 </div>
             </div>
         </div>
@@ -98,8 +159,12 @@ if($_SESSION['sid'] == session_id() && $_SESSION['user'] == "admin") {
 </body>
 
 </html>
+
 <?php
+
 } else {
-    header("Location: ../index.html");
+    header("Location:./../index.html");
 }
+$mysqli->close();
+
 ?>
